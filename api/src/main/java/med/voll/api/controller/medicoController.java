@@ -3,6 +3,7 @@ package med.voll.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,14 @@ public class medicoController {
     }
 
     @GetMapping
-    public List<DadosListagemMedicos> listar(){
-        return repository.findAll().stream().map(DadosListagemMedicos::new).toList();
+    public Page<DadosListagemMedicos> listar(org.springframework.data.domain.Pageable paginacao){
+        return repository.findAll(paginacao).map(DadosListagemMedicos::new);
+        /*
+         * TA VAMO LA:
+         * repository é o responsavel por fazer a conexão com a tabela medicos
+         * FINDALL => Retorna todas as linhas da tabela
+         * .MAP => Converte para o objeto da classe passada usando o construtor criado
+         * O METODO PRECIS DEVOLVER UM PAGE COMO FOI PASSADO O ATRIBUTO DE SOBREPOSICAO Pageable ao method E TBM O OBJETO DE PAGINACAO AO METHOD findall
+         */
     }
 }
