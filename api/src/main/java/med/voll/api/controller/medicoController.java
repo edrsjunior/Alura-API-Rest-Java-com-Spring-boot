@@ -2,6 +2,7 @@ package med.voll.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,7 @@ public class medicoController {
     }
 
     @GetMapping
-    public Page<DadosListagemMedicos> listar(org.springframework.data.domain.Pageable paginacao){
+    public Page<DadosListagemMedicos> listar(@PageableDefault(size = 10, sort = {"nome"}) org.springframework.data.domain.Pageable paginacao){
         return repository.findAll(paginacao).map(DadosListagemMedicos::new);
         /*
          * TA VAMO LA:
