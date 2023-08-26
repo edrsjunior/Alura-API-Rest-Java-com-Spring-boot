@@ -5,12 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import med.voll.api.medico.DadosAtualizacaoMedico;
 import med.voll.api.medico.DadosCadastroMedico;
 import med.voll.api.medico.DadosListagemMedicos;
 import med.voll.api.medico.Medico;
@@ -48,5 +50,13 @@ public class medicoController {
          * .MAP => Converte para o objeto da classe passada usando o construtor criado
          * O METODO PRECIS DEVOLVER UM PAGE COMO FOI PASSADO O ATRIBUTO DE SOBREPOSICAO Pageable ao method E TBM O OBJETO DE PAGINACAO AO METHOD findall
          */
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
+        var medico = repository.getReferenceById(dados.id());
+        medico.atualizarInformações(dados); 
+        /*Por conta da TAG @Transactional nao precisa subir o update explicitamente para o banco pois como carregamos um objeto com uma entidade do banco e muda algum atributo quando a transacao terminar ele detecta as alts e sobe para o banco*/
     }
 }
