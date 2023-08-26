@@ -39,7 +39,7 @@ public class medicoController {
     }
 
     @GetMapping
-    public Page<DadosListagemMedicos> listar(@PageableDefault(size = 10, sort = {"nome"}) org.springframework.data.domain.Pageable paginacao){
+    public Page<DadosListagemMedicos> listar(@PageableDefault(size = 10, sort = {"nome"} ) org.springframework.data.domain.Pageable paginacao){
         return repository.findAll(paginacao).map(DadosListagemMedicos::new);
         /*
          * TA VAMO LA:
